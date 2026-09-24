@@ -9,7 +9,10 @@ app.get("/health", (req, res) => {
 });
 
 app.get("/customers/search", (req, res) => {
-  const query = (req.query.q || "").toLowerCase();
+  const query = (req.query.q || "").trim().toLowerCase();
+  if (!query) {
+    return res.status(400).json({ error: "Query parameter 'q' is required" });
+  }
   const customers = [
     { id: 1, name: "Alice Johnson" },
     { id: 2, name: "Bob Smith" },

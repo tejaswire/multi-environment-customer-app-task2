@@ -8,6 +8,17 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "UP", environment: ENVIRONMENT, version: VERSION });
 });
 
+app.get("/customers/search", (req, res) => {
+  const query = (req.query.q || "").toLowerCase();
+  const customers = [
+    { id: 1, name: "Alice Johnson" },
+    { id: 2, name: "Bob Smith" },
+    { id: 3, name: "Charlie Lee" }
+  ];
+  const results = customers.filter(c => c.name.toLowerCase().includes(query));
+  res.status(200).json({ query, results });
+});
+
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Customer App running", environment: ENVIRONMENT, version: VERSION });
 });
